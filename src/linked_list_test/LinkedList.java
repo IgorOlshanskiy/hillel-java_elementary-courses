@@ -10,7 +10,7 @@ public class LinkedList implements Collection {
     public void push(Object o) {
         Node node = new Node(o, head);
         head = node;
-        size += 1;
+        size++;
     }
 
     @Override
@@ -26,8 +26,7 @@ public class LinkedList implements Collection {
     @Override
     public boolean contains(Object o) {
         Node current = head;
-
-        while (current.getNext() != null) {
+        while (current.getData() != null) {
             if (current.getData().equals(o)) {
                 return true;
             }
@@ -40,18 +39,18 @@ public class LinkedList implements Collection {
 
     @Override
     public Iterator iterator() {
-        return null;
+        return new LinkedListIterator(head);
     }
 
     @Override
     public Object[] toArray() {
-        Object[] array = new Object[size+1];
+        Object[] array = new Object[size];
         Node current = head;
         int i = 0;
         while (current != null) {
             array[i] = current.getData();
             current = current.getNext();
-            i += 1;
+            i++;
         }
         return array;
     }
@@ -59,7 +58,6 @@ public class LinkedList implements Collection {
     @Override
     public boolean add(Object o) {
         Node node = new Node(o, null);
-
         if (head == null){
             head = node;
             return true;
@@ -71,12 +69,23 @@ public class LinkedList implements Collection {
             current = current.getNext();
         }
         current.setNext(node);
-        size += 1;
+        size++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
+        if (o == null){
+            return false;
+        }
+        if (head == null){
+            return false;
+        }
+        if (head.getData().equals(o)){
+            head = head.getNext();
+            size--;
+            return true;
+        }
         Node prev = null;
         Node current = head;
         while (current.getData() != o) {
@@ -84,13 +93,13 @@ public class LinkedList implements Collection {
             current = current.getNext();
         }
         prev.setNext(current.getNext());
-        size -= 1;
-
+        size--;
         return true;
     }
 
     @Override
     public boolean addAll(Collection c) {
+        Object[] objects = c.toArray();
         return false;
     }
 
@@ -118,5 +127,17 @@ public class LinkedList implements Collection {
     @Override
     public Object[] toArray(Object[] a) {
         return new Object[0];
+    }
+
+    @Override
+    public String toString() {
+        String result = "[";
+        Node current = head;
+        while (current != null) {
+            //prev = current; // prev.next = current.next
+            result += current.getData() + ", ";
+            current = current.getNext();
+        }
+        return result + "]";
     }
 }
