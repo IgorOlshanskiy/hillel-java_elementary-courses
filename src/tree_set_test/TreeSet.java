@@ -19,8 +19,26 @@ public class TreeSet implements Set {
     }
 
     @Override
-    public boolean contains(Object o) {
-        return false;
+    public boolean contains(Object o)
+    {
+        try {
+            return containsRecursively(root, o);
+        } catch (Exception NullPointerException) {
+           return false;
+        }
+    }
+
+
+    private boolean containsRecursively(Node treeRoot, Object o) {
+        Integer oInt = (Integer) o;
+        Integer currentInt = (Integer) treeRoot.getData();
+        if (treeRoot == null) {
+            return false;
+        }
+        if (treeRoot.getData().equals(oInt)) {
+            return true;
+        }
+        return oInt < currentInt ? containsRecursively(treeRoot.getLeft(), o) : containsRecursively(treeRoot.getRight(), o);
     }
 
     @Override

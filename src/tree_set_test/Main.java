@@ -11,5 +11,8 @@ public class Main {
         treeSet.add(2);
 
         System.out.println(treeSet.toString());
+        System.out.println(treeSet.contains(1));
+        System.out.println(treeSet.contains(9));
+
     }
 }
