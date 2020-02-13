@@ -6,7 +6,9 @@ public class Main {
         System.out.println();
         myDict.put("Yo dawg", "эй братан");
         myDict.put("Hello", "привет");
-        String result = myDict.get("Yo dawg");
+        myDict.put("table", "стол");
+        myDict.put("this is nigger than 19", "выдуманное");
+        String result = myDict.get("table");
         System.out.println(result);
     }
 }

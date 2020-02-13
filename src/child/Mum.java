@@ -1,4 +1,9 @@
 package child;
 
-public class Mum {
+public class Mum implements HowToGreetable {
+    @Override
+    public String howToGreet() {
+        return "Здравствуйте";
+    }
+
 }

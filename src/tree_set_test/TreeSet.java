@@ -1,12 +1,21 @@
 package tree_set_test;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 
 public class TreeSet implements Set {
     private Node root;
+    private Comparator comparator;
 
+    public TreeSet(final Comparator comparator) {
+        this.comparator = comparator;
+    }
+
+    public TreeSet() {
+
+    }
 
     @Override
     public int size() {
@@ -62,25 +71,51 @@ public class TreeSet implements Set {
     }
 
     public boolean addRecursivelyToTree(Node treeRoot, Object o) {
-        Integer oInt = (Integer) o;
-        Integer currentInt = (Integer) treeRoot.getData();
-        if (oInt.equals(currentInt)){
-            return false;
+        int compereResult;
+        if (comparator != null){
+            compereResult = comparator.compare(treeRoot.getData(), o);
+        } else {
+        Comparable current = (Comparable) treeRoot.getData();
+        Comparable other = (Comparable) o;
+        compereResult = current.compareTo(other);
+        //int compereResult= current.compareTo(other);
         }
-        if (oInt > currentInt){
+        if (compereResult < 0){
             if (treeRoot.getRight() == null) {
                 treeRoot.setRight(new Node(o));
                 return true;
             }
             return addRecursivelyToTree(treeRoot.getRight(), o);
-        } else {
+        } else if (compereResult > 0) {
             if (treeRoot.getLeft() == null) {
                 treeRoot.setLeft(new Node(o));
                 return true;
             }
             return addRecursivelyToTree(treeRoot.getLeft(), o);
         }
+        return false;
     }
+
+//    public boolean addRecursivelyToTree(Node treeRoot, Object o) {
+//        Integer oInt = (Integer) o;
+//        Integer currentInt = (Integer) treeRoot.getData();
+//        if (oInt.equals(currentInt)){
+//            return false;
+//        }
+//        if (oInt > currentInt){
+//            if (treeRoot.getRight() == null) {
+//                treeRoot.setRight(new Node(o));
+//                return true;
+//            }
+//            return addRecursivelyToTree(treeRoot.getRight(), o);
+//        } else {
+//            if (treeRoot.getLeft() == null) {
+//                treeRoot.setLeft(new Node(o));
+//                return true;
+//            }
+//            return addRecursivelyToTree(treeRoot.getLeft(), o);
+//        }
+//    }
 
 //    @Override
 //    public boolean add(Object o) {
@@ -174,8 +209,25 @@ public class TreeSet implements Set {
 //              result = result + ", " + toString(root.getRight());
             }
         }
-
         return result;
+    }
+
+    public void print(){
+        if (root == null){
+            System.out.println("[]");
+        } else {
+            printRecursion(root);
+        }
+    }
+
+    private void printRecursion(Node root) {
+        if (root.getLeft() != null){
+            printRecursion(root.getLeft());
+        }
+        System.out.print(root.getData() + ", ");
+        if (root.getRight() != null){
+            printRecursion(root.getRight());
+        }
     }
 
 }

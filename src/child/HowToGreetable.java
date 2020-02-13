@@ -1,4 +1,6 @@
 package child;
 
-public interface HowToGreetable {
+interface HowToGreetable {
+    String howToGreet();
+
 }

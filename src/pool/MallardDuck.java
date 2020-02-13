@@ -1,4 +1,5 @@
-package Pool;
+package pool;
 
 public class MallardDuck {
+
 }

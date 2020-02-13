@@ -9,34 +9,57 @@ Dictionary - Словарь
 package dictionary_homework;
 
 public class MyDict {
-    private Entry[] array = new Entry[100];
+    private int capacity = 20;
+    private Entry[] array = new Entry[capacity];
 
-    public MyDict() {
-    }
 
     public void put(String key, String value) {
         Entry entry = new Entry(key, value);
-        int number = hash(key);
-        array[number] = entry;
-
+        int number = index(key);
+        if (array[number] == null) {
+            array[number] = entry;
+        }else {
+            Entry current = array[number];
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = entry;
+        }
     }
 
     public String get(String key) {
-        int hash = hash(key);
-        return array[hash].value;
+        int hash = index(key);
+        if (array[hash] != null) {
+            Entry current = array[hash];
+            while (true) {
+                if (current.key.equals(key)) {
+                    return current.value;
+                }
+                if (current == null) {
+                    return null;
+                }
+                current = current.next;
+            }
+        }
+        return null;
     }
 
     private static class Entry {
+        String key;
+        String value;
+        Entry next;
+
         public Entry(String key, String value){
             this.key = key;
             this.value = value;
         }
-        String key;
-        String value;
     }
 
-    private int hash(String s){
-        return s.length();
+    private int index(String s){
+        int hash = s.hashCode();
+        hash = Math.abs(hash);
+        hash = hash % capacity;
+        return hash;
     }
 
 }
