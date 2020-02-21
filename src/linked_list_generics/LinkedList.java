@@ -43,7 +43,7 @@ public class LinkedList<E> implements Collection<E> {
     }
 
     @Override
-    public Object[] toArray() {
+    public E[] toArray() {
         Object[] array = new Object[size];
         Node current = head;
         int i = 0;
@@ -52,7 +52,7 @@ public class LinkedList<E> implements Collection<E> {
             current = current.getNext();
             i++;
         }
-        return array;
+        return (E[]) array;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class TreeSet implements Set {
     {
         try {
             return containsRecursively(root, o);
-        } catch (Exception NullPointerException) {
+        } catch (Exception nullPointerException) {
            return false;
         }
     }
